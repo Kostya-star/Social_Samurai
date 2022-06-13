@@ -1,23 +1,41 @@
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className='app-wrapper'>
+      <header className='header'>
+        <img src='https://99designs-blog.imgix.net/blog/wp-content/uploads/2020/02/9388351_orig.png?auto=format&q=60&fit=max&w=930'></img>
       </header>
+      <nav className='nav'>
+        <div>
+         <a>Profile</a> 
+        </div>
+        <div>
+        <a>Messages</a> 
+        </div>
+      </nav>
+      <div className='content'>
+        <div>
+          <img className='nature-img' src='https://picfiles.alphacoders.com/278/278586.jpg'></img>
+        </div>
+        <div>
+          ava + description
+        </div>
+        <div>
+          My posts
+          <div>
+            New post
+          </div>
+          <div>
+            <div>
+              post1
+            </div>
+            <div>
+              post2
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
