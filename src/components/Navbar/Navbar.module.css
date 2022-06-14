@@ -1,0 +1,8 @@
+.active {
+  color: lightseagreen;
+}
+
+.nav {
+  grid-area: n;
+  background-color: burlywood;
+}

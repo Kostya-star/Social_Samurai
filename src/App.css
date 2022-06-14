@@ -2,31 +2,14 @@
   display: grid;
   margin: 0 auto;
   /* min-width: 1200px; */
-  grid-template-areas: 
-  'h h '
-  'n c ';
+  grid-template-areas:
+    'h h '
+    'n c ';
   grid-template-rows: 60px 1fr;
   grid-template-columns: 2fr 10fr;
 }
 
-.header {
-  grid-area: h;
-  background-color: green;
-}
-.header img {
-  width: 60px;
-}
-
-.nav {
-  grid-area: n;
-  background-color: burlywood;
-}
-
-.content {
+.app-wrapper-content {
   grid-area: c;
   background-color: cornflowerblue;
-}
-
-.nature-img {
-  width: 1200px;
 }
