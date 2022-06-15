@@ -4,8 +4,8 @@ const Post = (props) => {
   return (
     <div className={s.item}>
       <img src="https://uprostim.com/wp-content/uploads/2021/03/image096-74.jpg" />
-      {props.sms}
-      <div>like! {props.likecount}</div>
+      {props.message}
+      <div>like! {props.likesCount}</div>
     </div>
   );
 };

@@ -1,5 +1,11 @@
-.active {
-  color: lightseagreen;
+.item {
+  color: blueviolet;
+  text-decoration: none;
+}
+
+.activeLink {
+  color: gold;
+  text-decoration: none;
 }
 
 .nav {
