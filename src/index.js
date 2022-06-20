@@ -1,26 +1,25 @@
 import reportWebVitals from './reportWebVitals';
-import state, {subscribe} from'./redux/state';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { addPost, updateNewPostText, updateNewDialogText, addDialog } from './redux/state'
+import store from './redux/state'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 let rerenderEntireTree = (state) => {
   root.render(
     <React.StrictMode>
       <App state={state} 
-      addPost={addPost} 
-      addDialog={addDialog}
-      updateNewPostText={updateNewPostText}
-      updateNewDialogText={updateNewDialogText}/>
+      addPost={store.addPost.bind(store)} 
+      addDialog={store.addDialog.bind(store)}
+      updateNewPostText={store.updateNewPostText.bind(store)}
+      updateNewDialogText={store.updateNewDialogText.bind(store)}/>
     </React.StrictMode>
   );
 }
 
-rerenderEntireTree(state)
+rerenderEntireTree(store.getState());
 
-subscribe(rerenderEntireTree);
+store.subscribe(rerenderEntireTree);
 
 reportWebVitals();
