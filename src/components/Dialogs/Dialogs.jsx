@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import React from "react";
+import {addDialogActionCreator, updateNewDialogTextActionCreator} from '../../redux/state';
 
 
 const Dialogs = (props) => {
@@ -13,17 +14,18 @@ const Dialogs = (props) => {
   let messages = props.dialogsPage.messages.map((m) => (
     <Message message={m.message} id={m.id} />
   ));
+
   let newText = React.createRef();
 
   let addDialog = () => {
     // props.addDialog();
-    props.dispatch({type: 'ADD-DIALOG'});
+    props.dispatch(addDialogActionCreator());
   }
 
   let onDialogChange = () => {
     let text = newText.current.value;
     // props.updateNewDialogText(text)
-    let action = {type: 'UPDATE-NEW-DIALOG-TEXT', newText: text}
+    let action = updateNewDialogTextActionCreator(text)
     props.dispatch(action);
   }
 
@@ -36,7 +38,7 @@ const Dialogs = (props) => {
       <div className={s.messages}>
         {messages}
       <textarea onChange={onDialogChange} ref={newText} value={props.dialogsPage.newDialogPost}/> <br />
-      <button onClick={addDialog}>Create</button>
+      <button onClick={addDialog}>send</button>
       </div>
     </div>
   );
