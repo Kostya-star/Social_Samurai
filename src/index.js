@@ -10,7 +10,7 @@ let rerenderEntireTree = (state) => {
   debugger;
   root.render(
     <React.StrictMode>
-      <App state={state} 
+      <App store={store} state={state} 
       dispatch={store.dispatch.bind(store)}
       />
     </React.StrictMode>
