@@ -1,5 +1,5 @@
-let ADD_DIALOG = 'ADD-DIALOG';
-let UPDATE_NEW_DIALOG_TEXT = 'UPDATE-NEW-DIALOG-TEXT';
+const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY';
+const SEND_MESSAGE = 'SEND_MESSAGE';
 
 let initialState = {
     dialogs: [
@@ -16,31 +16,28 @@ let initialState = {
       { id: 4, message: "sup bro" },
       { id: 5, message: "speak eng!" },
     ],
-    newDialogPost: 'badass',
+    newMessageBody: 'badass',
 }
 
 const dialogsReducer = (store = initialState, action) => {
-
-  switch (action.type) {
-    case ADD_DIALOG:
-      let newDialog = {
-        id: 6,
-        message: store.newDialogPost,
-      }
-      store.messages.push(newDialog)
-      store.newDialogPost = '';
+  switch(action.type) {
+    case UPDATE_NEW_MESSAGE_BODY:
+      store.newMessageBody = action.body;
       return store;
-    case UPDATE_NEW_DIALOG_TEXT:
-      store.newDialogPost = action.newText;
+    case SEND_MESSAGE:
+      let body = store.newMessageBody;
+      store.newMessageBody = '';
+      store.messages.push({ id: 6, message: body});
       return store;
     default:
-      return store;
+      return store;  
+
   }
 }
 
-export const addDialogActionCreator = () => ({ type: ADD_DIALOG })
-export const updateNewDialogTextActionCreator = (text) => (
-  { type: UPDATE_NEW_DIALOG_TEXT, newText: text }
+export const sendMessageCreator = () => ({ type: SEND_MESSAGE })
+export const updateNewMessageBodyCreator = (body) => (
+  { type: UPDATE_NEW_MESSAGE_BODY, body: body }
 )
 
 export default dialogsReducer;
