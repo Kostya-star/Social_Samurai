@@ -4,37 +4,6 @@ import MyPosts from "./MyPosts";
 import {connect} from 'react-redux'
 import store from './../../../redux/state';
 
-// const MyPostsContainer = () => {
-
-//   // let state = props.store.getState();
-
-//   return (
-//     <StoreContext.Consumer>
-//       {(store) => {
-//         let state = store.getState();
-//         let addPost = () => {
-//           store.dispatch(addPostActionCreator());
-//         } 
-      
-//         let onPostChange = (text) => {
-//           let action = updateNewPostTextActionCreator(text)
-//           store.dispatch(action);
-//         }
-//         return (
-//           <MyPosts
-//             updateNewPostText={onPostChange}
-//             addPost={addPost}
-//             posts={state.profilePage.posts}
-//             newPostText={state.profilePage.newPostText}
-//           />
-//         );
-//       }}
-//     </StoreContext.Consumer>
-//   );
-// };
-
-let state = store.getState();
-
 
 let mapStateToProps = (state) => {
   return {
