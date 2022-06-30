@@ -1,25 +1,20 @@
-import s from './users.module.css'
+import s from './users.module.css';
+import * as axios from 'axios';
+import userPhoto from '../../assets/images/user.png'
 
 let Users = (props) => {
   if (props.users.length === 0) {
-    props.setUsers([
-    
-      { id: 1, photoUrl: 'https://img.lovepik.com/free-png/20211229/lovepik-customer-service-personnel-icon-png-image_400960948_wh860.png', 
-      fullName: 'Costya', status: 'Im the boss of course!', location: {city: 'Bender', country: 'Moldova'} },
-  
-      { id: 2, photoUrl: 'https://img.lovepik.com/free-png/20211229/lovepik-customer-service-personnel-icon-png-image_400960948_wh860.png', 
-      fullName: 'Alexandro Van Den Boogert', status: 'Im the 2nd boss of course!', location: {city: 'Amsterdam', country: 'Netherlands'} },
-  
-      { id: 3, photoUrl: 'https://img.lovepik.com/free-png/20211229/lovepik-customer-service-personnel-icon-png-image_400960948_wh860.png', 
-      fullName: 'Vika', status: 'Im the 3rd boss of course!', location: {city: 'Uhta', country: 'USA'} },
-    ])
+    axios.get('https://social-network.samuraijs.com/api/1.0/users')
+          .then(response => {
+                props.setUsers(response.data.items);
+          })
   }
   return <div>
       {
       props.users.map(u => <div key={u.id}>
           <span>
             <div>
-              <img src={u.photoUrl} className={s.userPhoto}/>
+              <img src={u.photos.small =! null ? u.photos.small : userPhoto } className={s.userPhoto}/>
             </div>
             <div>
               {u.followed ? <button onClick={() => {props.unfollow(u.id)}}>Unfollow</button>:
@@ -31,12 +26,12 @@ let Users = (props) => {
 
           <span>
             <span>
-              <div>{u.fullName}</div>
+              <div>{u.name}</div>
               <div>{u.status}</div>
             </span>
             <span>
-              <div>{u.location.country}</div>
-              <div>{u.location.city}</div>
+              <div>{'u.location.country'}</div>
+              <div>{'u.location.city'}</div>
             </span>
           </span>
         </div>)
