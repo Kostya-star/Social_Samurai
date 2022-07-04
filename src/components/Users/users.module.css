@@ -4,3 +4,8 @@
   z-index: 100;
   border: 2px solid yellow;
 }
+
+.selectedPage {
+  font-weight: bold;
+  /* cursor: pointer; */
+}
