@@ -9,11 +9,13 @@ const ProfileInfo = (props) => {
         <img
           className={s.nature_img}
           src="https://picfiles.alphacoders.com/278/278586.jpg"
-        ></img>
+          alt="im an img"
+        />
       </div>
       <div className={s.descriptionBlock}> 
-        ava + description 
-        <img src={props.profile.photos.large}/>
+        <img src={props.profile.photos.large} /> <br/>
+        About me: {props.profile.aboutMe} <br/>
+        Looking for a job: {props.profile.lookingForAJobDescription}
       </div>
     </div>
   );

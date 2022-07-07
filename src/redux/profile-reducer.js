@@ -8,11 +8,10 @@ let initialState = {
     { id: 2, message: 'sup nigga', likesCount: 20 },
   ],
   newPostText: 'fixed data',
-  profile: null,
+  profile: null
 };
 
 const profileReducer = (store = initialState, action) => {
-
   switch (action.type) {
     case ADD_POST: {
       let newPost = {
