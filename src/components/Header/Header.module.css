@@ -6,3 +6,10 @@
   grid-area: h;
   background-color: green;
 }
+
+.loginBlock a{
+  float: right;
+  color: white;
+  margin-top: -25px;
+  margin-right: 20px;
+}
