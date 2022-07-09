@@ -7,9 +7,12 @@
   background-color: green;
 }
 
-.loginBlock a{
+.loginBlock {
+  display: inline;
   float: right;
-  color: white;
-  margin-top: -25px;
-  margin-right: 20px;
+  font-weight: 600;
+  color: white; 
+  margin-top: 20px;
+  margin-right: 20px; 
+  cursor: pointer;
 }
