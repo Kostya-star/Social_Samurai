@@ -18,9 +18,13 @@ export const usersAPI = {
     return instance
     .get(`auth/me`, {withCredentials: true})
     .then(response => response.data)
-  }
-}
+  },
 
-const getUnfollow = () => {
-  return 
+  unfollow(userId) {
+    return instance.delete(`follow/${userId}`)
+  },
+
+  follow(userId) {
+    return instance.post(`follow/${userId}`, {})
+  },
 }
