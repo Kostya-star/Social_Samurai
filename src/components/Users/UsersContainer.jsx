@@ -4,7 +4,7 @@ import { follow, unfollow, setUsers, setCurrentPage, toggleFollowingProgress, re
 import Users from './Users'
 import Preloader from '../common/preloader/Preloader';
 import { compose } from 'redux';
-import { getCurrentPage, getPageSize, getTotalUsersCount, getUsers, getIsFetching, getFollowingInProgress } from './../../redux/users-selectors';
+import { getCurrentPage, getPageSize, getTotalUsersCount, getIsFetching, getFollowingInProgress, getUsers } from './../../redux/users-selectors';
 
 class UsersContainer extends React.Component {
 
@@ -47,6 +47,7 @@ class UsersContainer extends React.Component {
 // }
 
 let mapStateToProps = (state) => {
+  console.log('mstpUsers');
   return {
     users: getUsers(state), 
     pageSize: getPageSize(state),
