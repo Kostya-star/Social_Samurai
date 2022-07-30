@@ -17,12 +17,13 @@ let initialState = {
   page: 1,
   isFetching: true,
   followingInProgress: [], 
+  fake: 10,
 };
 
 const usersReducer = (store = initialState, action) => {
 
   switch (action.type) {
-
+    case 'FAKE': return {...store, fake: store.fake + 1}
     case FOLLOW:
       return {
         ...store,

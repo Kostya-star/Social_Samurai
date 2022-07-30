@@ -19,37 +19,41 @@ class ProfileContainer extends React.Component {
   }
 
   render() {
+    // console.log('render profile');
     return (
       <Profile {...this.props} status={this.props.status} updateStatus={this.props.updateStatus}/>
     )
   }
 }
 
-
-let mapStateToProps = (state) => ({
-  profile: state.profilePage.profile,
-  status: state.profilePage.status,
-  authorizedUserId: state.auth.userId,
-  isAuth: state.auth.isAuth,
-})
-
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {
-      let location = useLocation();
-      let navigate = useNavigate();
-      let params = useParams();
-      return (
-          <Component
-              {...props}
-              router={{ location, navigate, params }}
-          />
+    let location = useLocation();
+    let navigate = useNavigate();
+    let params = useParams();
+    return (
+      <Component
+      {...props}
+      router={{ location, navigate, params }}
+      />
       );
+    }
+    
+    return ComponentWithRouterProp;
+  }
+  
+  let mapStateToProps = (state) => {
+    // console.log('MSTPProfile');
+    return ({
+      profile: state.profilePage.profile,
+      status: state.profilePage.status,
+      authorizedUserId: state.auth.userId,
+      isAuth: state.auth.isAuth,
+    })
   }
 
-  return ComponentWithRouterProp;
-}
 
-export default compose(
+  export default compose(
   connect(mapStateToProps, {getUserProfile, getStatus, updateStatus}),
   withRouter,
   withAuthRedirect

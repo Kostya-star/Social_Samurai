@@ -6,6 +6,10 @@ import App from './App';
 import store from './redux/redux-state'
 import {Provider} from 'react-redux'
 
+// setInterval(() => {
+//   store.dispatch({type: 'FAKE'})
+// }, 1000);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
     <Provider store={store}>
