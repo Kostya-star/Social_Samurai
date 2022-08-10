@@ -23,7 +23,7 @@ class UsersContainer extends React.Component {
     
     return <div>
     {this.props.isFetching ? <Preloader/> : <Users pageSize={this.props.pageSize}
-                  totalUsersCount={this.props.totalUsersCount}
+                  totalItemsCount={this.props.totalItemsCount}
                   currentPage={this.props.currentPage}
                   onPageChanged={this.onPageChanged}
                   users={this.props.users}
@@ -42,7 +42,7 @@ class UsersContainer extends React.Component {
       return {
         users: getUsers(state), 
         pageSize: getPageSize(state),
-        totalUsersCount: getTotalUsersCount(state),
+        totalItemsCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
         followingInProgress: getFollowingInProgress(state),

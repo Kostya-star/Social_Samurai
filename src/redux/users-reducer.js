@@ -14,7 +14,7 @@ let TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS';
 let initialState = {
   users: [ ],
   pageSize: 5,
-  totalUsersCount: 0,
+  totalItemsCount: 0,
   page: 1,
   isFetching: true,
   followingInProgress: [], 
@@ -45,7 +45,7 @@ const usersReducer = (store = initialState, action) => {
       }
 
       case SET_TOTAL_USERS_COUNT: {
-        return {...store, totalUsersCount: action.count}
+        return {...store, totalItemsCount: action.count}
       }
 
       case TOGGLE_IS_FETCHING: {
@@ -67,7 +67,7 @@ export const followSuccess = (userId) => ({ type: FOLLOW, userId })
 export const unfollowSuccess = (userId) => ({ type: UNFOLLOW, userId })
 export const setUsers = (users) => ({ type: SET_USERS, users })
 export const setCurrentPage = (page) => ({ type: SET_СURRENT_PAGE, page })
-export const setTotalUsersCount = (totalUsersCount) => ({ type: SET_TOTAL_USERS_COUNT, count: totalUsersCount})
+export const setTotalItemsCount = (totalItemsCount) => ({ type: SET_TOTAL_USERS_COUNT, count: totalItemsCount})
 export const toggleIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching })
 export const toggleFollowingProgress = (isFetching, userId) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId })
 
@@ -80,7 +80,7 @@ export const requestUsers = (page, pageSize) => {
     let data = await usersAPI.getUsers(page, pageSize);
         dispatch(toggleIsFetching(false));
         dispatch(setUsers(data.items));
-        dispatch(setTotalUsersCount(data.totalCount));
+        dispatch(setTotalItemsCount(data.totalCount));
   }
 }
 
