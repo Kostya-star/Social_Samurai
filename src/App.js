@@ -33,10 +33,10 @@ class App extends Component {
 
 
     return (
-      <Suspense fallback={<Preloader/>}>
-        <BrowserRouter>
+      <BrowserRouter>
             <div className='app-wrapper'>
               <HeaderContainer />
+      <Suspense fallback={<Preloader/>}>
               <Navbar />
               <div className='app-wrapper-content'>
                 <Routes>
@@ -60,9 +60,9 @@ class App extends Component {
                   
                 </Routes>
               </div>
+      </Suspense>
             </div>
           </BrowserRouter >
-      </Suspense>
       )
 }
 }
