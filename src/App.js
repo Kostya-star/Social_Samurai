@@ -4,7 +4,7 @@ import Navbar from './components/Navbar/Navbar'
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {HashRouter, Routes, Route} from 'react-router-dom';
 import UsersContainer from './components/Users/UsersContainer'
 import LoginPage from './components/Login/Login.jsx'
 import React, { Component, Suspense } from 'react';
@@ -33,7 +33,7 @@ class App extends Component {
 
 
     return (
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <HashRouter>
             <div className='app-wrapper'>
               <HeaderContainer />
       <Suspense fallback={<Preloader/>}>
@@ -62,7 +62,7 @@ class App extends Component {
               </div>
       </Suspense>
             </div>
-          </BrowserRouter >
+          </HashRouter >
       )
 }
 }
