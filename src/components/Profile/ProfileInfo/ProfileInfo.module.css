@@ -5,3 +5,11 @@
 .nature_img {
   width: 1200px;
 }
+
+.mainPhoto {
+  max-width: 125px;
+}
+
+.proStatus {
+  display: flex;
+}
