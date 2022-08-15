@@ -13,3 +13,7 @@
 .proStatus {
   display: flex;
 }
+
+.contacts {
+  padding-left: 10px;
+}
