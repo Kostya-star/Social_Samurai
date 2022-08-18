@@ -21,16 +21,24 @@ const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileCo
 
 
 class App extends Component {
+  // catchAllUnhandledErrors = (promiseRejectionEvent) => {
+  //   alert('theres an error occured');
+  //   // console.log(promiseRejectionEvent);
+  // }
 
   componentDidMount() {
     this.props.initializeApp();
+    // window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
   }
+  // componentWillUnmount() {
+  //   window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors);
+  // }
 
   render() {
     
-    // !this.props.initialized && <Preloader/>
-    if (!this.props.initialized) return <Preloader/>
-
+    !this.props.initialized && <Preloader/>
+    // if (!this.props.initialized) return <Preloader/>
+  
 
     return (
       <HashRouter>
@@ -40,24 +48,33 @@ class App extends Component {
               <Navbar />
               <div className='app-wrapper-content'>
                 <Routes>
-                  
+
+
                   <Route path ='/profile/:userId' 
-                  element={<ProfileContainer />} />
-                  <Route path='/profile/*' element={<ProfileContainer />} />
+                      element={<ProfileContainer />} />
+                  <Route path='/profile/*' 
+                      element={<ProfileContainer />} />
 
                   <Route path ='/dialogs/*' 
-                  element={<DialogsContainer />} />
+                      element={<DialogsContainer />} />
                   
-                  <Route path ='/news' element={<News/>} />
-                  <Route path ='/music' element={<Music/>} />
-                  <Route path ='/settings' element={<Settings/>} />
+                  <Route path ='/news' 
+                      element={<News/>} />
+                  <Route path ='/music' 
+                      element={<Music/>} />
+                  <Route path ='/settings' 
+                      element={<Settings/>} />
 
                   <Route path ='/users' 
-                  element={<UsersContainer/>} />
+                      element={<UsersContainer/>} />
 
                   <Route path ='/login' 
-                  element={<LoginPage/>} />
-                  
+                      element={<LoginPage/>} />
+
+                  <Route path ='*' 
+                      element={() => <div>404 NOT FOUND</div>} />
+
+
                 </Routes>
               </div>
       </Suspense>
