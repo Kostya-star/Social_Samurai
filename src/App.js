@@ -66,7 +66,7 @@ class App extends Component {
                       element={<Settings/>} />
 
                   <Route path ='/users' 
-                      element={<UsersContainer/>} />
+                      element={<UsersContainer pageTitle={'Пользователи'}/>} />
 
                   <Route path ='/login' 
                       element={<LoginPage/>} />

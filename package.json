@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "gh-pages": "^4.0.0",
+    "redux-devtools-extension": "^2.13.9",
     "tsconfig-react": "^1.0.2"
   }
 }

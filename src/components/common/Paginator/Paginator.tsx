@@ -1,36 +1,21 @@
-// import s from './Paginator.module.css'
-
-// const Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged}) => {
-
-//   let pagesCount = Math.ceil (totalItemsCount / pageSize);
-
-//     let pages = [];
-//     for(let i = 1; i <= pagesCount; i++) {
-//       if (pages.length < 10) {
-//         pages.push(i)
-//       }
-//     }
-
-//     return <div>
-//             {pages.map(p => {
-//               return <span className={currentPage === p && s.selectedPage}
-//               onClick={ (e) => {onPageChanged(p);}}>{p}</span>
-//             })}
-//         </div>
-// }
-
-// export default Paginator;
-
-
 import s from './Paginator.module.css'
 import { useState } from 'react';
 import cn from 'classnames';
 
-const Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, portionSize = 10}) => {
+
+type PaginatorPropsType = {
+  totalItemsCount: number, 
+  pageSize: number, 
+  currentPage: number, 
+  onPageChanged: (p: number) => void, 
+  portionSize?: number
+}
+
+const Paginator: React.FC<PaginatorPropsType> = ({totalItemsCount, pageSize, currentPage, onPageChanged, portionSize = 10}) => {
 
   let pagesCount = Math.ceil (totalItemsCount / pageSize);
 
-    let pages = [];
+    let pages: Array<number> = [];
     for(let i = 1; i <= pagesCount; i++) {
       if (pages.length < 10) {
         pages.push(i)
@@ -39,10 +24,11 @@ const Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, porti
 
     let portionCount = Math.ceil(pagesCount / portionSize);
     let [portionNumber, setPortionNumber] = useState(1);
+    if(portionNumber === null) portionNumber = 1
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
     let rightPortionPageNumber = portionNumber * portionSize;
 
-    return <div className={s.paginator}>
+    return (<div className={s.paginator}>
               {portionNumber > 1 &&
               <button onClick={() => {setPortionNumber(portionNumber - 1)}}>PREV</button>}
 
@@ -59,15 +45,9 @@ const Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, porti
                       
                       {portionCount > portionNumber &&
                       <button onClick={() => {setPortionNumber(portionNumber + 1)}}>NEXT</button>}
-            </div>
+            </div>)
 
 
-    // return <div>
-    //         {pages.map(p => {
-    //           return <span className={currentPage === p && s.selectedPage}
-    //           onClick={ (e) => {onPageChanged(p);}}>{p}</span>
-    //         })}
-    //     </div>
 }
 
 export default Paginator;

@@ -1,19 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { follow, unfollow, setUsers, setCurrentPage, toggleFollowingProgress, requestUsers } from './../../redux/users-reducer';
+import { follow, unfollow, requestUsers } from '../../redux/users-reducer';
 import Users from './Users'
 import Preloader from '../common/preloader/Preloader';
 import { compose } from 'redux';
-import { getCurrentPage, getPageSize, getTotalUsersCount, getIsFetching, getFollowingInProgress, getUsers } from './../../redux/users-selectors';
+import { getCurrentPage, getPageSize, getTotalUsersCount, getIsFetching, getFollowingInProgress, getUsers } from '../../redux/users-selectors';
+import { UsersType } from '../../types/types';
+import { AppStateType } from '../../redux/redux-state';
 
-class UsersContainer extends React.Component {
+type MapStatePropsType = {  
+  currentPage: number
+  pageSize: number
+  isFetching: boolean
+  totalItemsCount: number
+  users: Array<UsersType>
+  followingInProgress: Array<number>
+}
+type MapStateDispatchType = {  
+  requestUsers: (pageNumber: number, pageSize: number) => void,
+  unfollow: (id: number) => void
+  follow: (id: number) => void
+}
+type OwnPropsType = {  
+  pageTitle: string
+}
+type UsersContainerPropsType = MapStatePropsType & MapStateDispatchType & OwnPropsType
+
+class UsersContainer extends React.Component<UsersContainerPropsType> {
 
   componentDidMount() {
     let {currentPage, pageSize} = this.props;
     this.props.requestUsers(currentPage, pageSize);
   }
   
-  onPageChanged = (pageNumber) => {
+  onPageChanged = (pageNumber: number) => {
     let {pageSize} = this.props;
     this.props.requestUsers(pageNumber, pageSize);
 
@@ -22,6 +42,7 @@ class UsersContainer extends React.Component {
   render() {
     
     return <div>
+      <h2>{this.props.pageTitle}</h2>
     {this.props.isFetching ? <Preloader/> : <Users pageSize={this.props.pageSize}
                   totalItemsCount={this.props.totalItemsCount}
                   currentPage={this.props.currentPage}
@@ -37,8 +58,7 @@ class UsersContainer extends React.Component {
 }
 
     
-    let mapStateToProps = (state) => {
-      console.log('mstpUsers');
+    let mapStateToProps = (state: AppStateType): MapStatePropsType => {
       return {
         users: getUsers(state), 
         pageSize: getPageSize(state),
@@ -51,5 +71,6 @@ class UsersContainer extends React.Component {
     
     
     export default compose(
-      connect(mapStateToProps,{follow,unfollow,setCurrentPage,toggleFollowingProgress, requestUsers})
-      )(UsersContainer)                      
+      connect<MapStatePropsType, MapStateDispatchType, OwnPropsType, AppStateType>
+      (mapStateToProps, {follow, unfollow, requestUsers})
+      )(UsersContainer)            
