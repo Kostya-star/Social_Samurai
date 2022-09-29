@@ -1,7 +1,7 @@
-import * as axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
+import { InitialStateProfileType } from '../types/types';
 
-      // @ts-ignore
-
+      
 const instance =  axios.create({
   withCredentials: true, 
   baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -12,44 +12,44 @@ export const usersAPI = {
   getUsers(currentPage = 1, pageSize = 10) {
     return instance
       .get(`users?page=${currentPage}&count=${pageSize}`)
-      // @ts-ignore
+      
       .then(response => response.data);
   },
-      // @ts-ignore
+      
 
-  unfollow(userId) {
+  unfollow(userId: number) {
     return instance.delete(`follow/${userId}`)
   },
-      // @ts-ignore
+      
 
-  follow(userId) {
+  follow(userId: number) {
     return instance.post(`follow/${userId}`, {})
   },
-      // @ts-ignore
+      
 
-  getProfile(userId) {
+  getProfile(userId: number) {
     console.warn('obsolete method. plz profileAPI object.');
     return profileAPI.getProfile(userId);
   }
 
 }
-      // @ts-ignore
+      
 
-export const profileAPI = {      // @ts-ignore
+export const profileAPI = {      
 
-  getProfile(userId) {
+  getProfile(userId: number) {
     return instance.get(`profile/${userId}`) 
-  },      // @ts-ignore
+  },      
 
-  getStatus(userId) {
+  getStatus(userId: number) {
     return instance.get('profile/status/' + userId)
-  },      // @ts-ignore
+  },      
 
-  updateStatus(status) {
+  updateStatus(status: string) {
     return instance.put('profile/status', {status: status})
-  },      // @ts-ignore
+  },      
 
-  savePhoto(photoFile) {
+  savePhoto(photoFile: any) {
     const formData = new FormData();
     formData.append('image', photoFile)
     return instance.put('profile/photo', formData, {
@@ -57,28 +57,63 @@ export const profileAPI = {      // @ts-ignore
         'Content-Type': 'multipart/form-data'
       }
     })
-  },      // @ts-ignore
+  },      
 
-  saveProfile(profile) {
+  saveProfile(profile: InitialStateProfileType) {
     return instance.put('profile', profile)
   },
 }
 
+export enum ResultCodeEnum {
+  Success = 0,
+  Error = 1,
+}
+export enum ResultCodeForCaptchaEnum {
+  CaptchaIsRequired = 10,
+}
+
+type AuthAPIMeGetType = {
+  data: {
+    id: number,
+    email: string,
+    login: string
+  }
+  resultCode: ResultCodeEnum 
+  messages: Array<string>
+}
+type AuthAPILoginPostType = {
+  resultCode: ResultCodeEnum | ResultCodeForCaptchaEnum,
+  messages: Array<string>
+  data: {
+    userId: number
+  }
+}
+type AuthAPILogoutDeleteType = {
+  resultCode: number
+  messages: Array<string>
+  data: {}
+}
+
 export const authAPI = {
   me() {
-    return instance.get(`auth/me`);
-  },      // @ts-ignore
+    return instance.get<AuthAPIMeGetType>(`auth/me`).then(res => res.data);
+  },      
 
-  login(email, password, rememberMe = false, captcha: string | null = null) {
-    return instance.post(`auth/login`, { email, password, rememberMe, captcha });
+  login(email: string, password: string, rememberMe = false, captcha: string | null = null) {
+    return instance.post<AuthAPILoginPostType>(`auth/login`, { email, password, rememberMe, captcha })
+    .then(response => response.data);
   },
   logout() {
-    return instance.delete(`auth/login`);
+    return instance.delete<AuthAPILogoutDeleteType>(`auth/login`);
   },
+}
+
+type SecurityAPIGetCaptchaUrlType = {
+  url: string
 }
 
 export const securityAPI = {
   getCaptchaUrl() {
-    return instance.get(`security/get-captcha-url`);
+    return instance.get<SecurityAPIGetCaptchaUrlType>(`security/get-captcha-url`).then(response => response.data);
   }
 }
