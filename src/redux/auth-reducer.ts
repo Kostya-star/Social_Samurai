@@ -87,7 +87,8 @@ async (dispatch, getState) => {
         dispatch(getCaptchaUrl());
       }
       let message = loginData.messages.length > 0 ? loginData.messages[0] : 'wrong credentials, try again!';
-      dispatch(stopSubmit('login', { _error: message });
+      //@ts-ignore
+      dispatch(stopSubmit('login', { _error: message }));
       // function stopSubmit(formName: string, errorObject?: {}): any
     } 
 }

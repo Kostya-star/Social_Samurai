@@ -6,7 +6,7 @@ import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import {HashRouter, Routes, Route} from 'react-router-dom';
 import UsersContainer from './components/Users/UsersContainer'
-import LoginPage from './components/Login/Login.jsx'
+import LoginPage from './components/Login/Login'
 import React, { Component, Suspense } from 'react';
 import { connect } from 'react-redux';
 import {initializeApp} from './redux/app-reducer'
