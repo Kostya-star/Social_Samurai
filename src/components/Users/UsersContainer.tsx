@@ -72,5 +72,6 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
     
     export default compose(
       connect<MapStatePropsType, MapStateDispatchType, OwnPropsType, AppStateType>
-      (mapStateToProps, {follow, unfollow, requestUsers})
+      (mapStateToProps, 
+        {follow, unfollow, requestUsers})
       )(UsersContainer)            
