@@ -25,5 +25,5 @@ export type UsersType = {
   status: string, 
   photos: InitialStateProfilePhotosType,
   followed: boolean
-  }
+}
 

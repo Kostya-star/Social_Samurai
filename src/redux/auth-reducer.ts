@@ -2,11 +2,11 @@ import {authAPI, ResultCodeEnum, ResultCodeForCaptchaEnum, securityAPI} from '..
 import {stopSubmit} from 'redux-form';
 import { Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { AppStateType } from './redux-state';
+import { AppStateType, BaseThunkType, InferActionsTypes } from './redux-state';
 
 
-let SET_USER_DATA = 'samurai-network/auth/SET_USER_DATA' as const;
-let GET_CAPTCHA_URL_SUCCESS = 'samurai-network/auth/GET_CAPTCHA_URL_SUCCESS' as const;
+let SET_USER_DATA = 'samurai-network/auth/SET_USER_DATA';
+let GET_CAPTCHA_URL_SUCCESS = 'samurai-network/auth/GET_CAPTCHA_URL_SUCCESS';
 
 let initialState = {
   userId: null as number | null,
@@ -17,6 +17,8 @@ let initialState = {
 };
 
 export type InitialStateType = typeof initialState;
+type ActionsType = InferActionsTypes<typeof actions>
+type ThunkType = BaseThunkType<ActionsType>
 
 const authReducer = (store = initialState, action: ActionsType): InitialStateType => {
 
@@ -34,46 +36,25 @@ const authReducer = (store = initialState, action: ActionsType): InitialStateTyp
   }
 }
 
-type ActionsType = ReturnType<typeof setAuthUserData> | ReturnType<typeof getCaptchaUrlSuccess>
+// type ActionsType = ReturnType<typeof actions.setAuthUserData> | ReturnType<typeof actions.getCaptchaUrlSuccess>
 
-type SetAuthUserDataPayloadActionType = {
-    userId: number | null, 
-    email: string | null, 
-    login: string | null, 
-    isAuth: boolean 
-}
-type SetAuthUserDataActionType = {
-  type: typeof SET_USER_DATA, 
-  payload: SetAuthUserDataPayloadActionType
-}
-
-export const setAuthUserData = (userId: number | null, 
-                                email: string | null, 
-                                login: string | null, 
-                                isAuth: boolean): SetAuthUserDataActionType => ({ 
-  type: SET_USER_DATA, payload: { userId, email, login, isAuth } 
-});
-
-
-type GetCaptchaUrlSuccessActionType = {
-  type: typeof GET_CAPTCHA_URL_SUCCESS, 
-  payload: { captchaUrl: string } 
-}
-
-export const getCaptchaUrlSuccess = (captchaUrl: string): GetCaptchaUrlSuccessActionType => ({ 
+const actions = {
+  setAuthUserData: (userId: number | null, 
+                    email: string | null, 
+                    login: string | null, 
+                    isAuth: boolean) => ({ 
+type: SET_USER_DATA, payload: { userId, email, login, isAuth } 
+} as const),
+  getCaptchaUrlSuccess: (captchaUrl: string) => ({ 
   type: GET_CAPTCHA_URL_SUCCESS, payload: { captchaUrl } 
-});
-
-
-
-
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
+} as const),
+}
 
 export const getAuthUserData = (): ThunkType => async (dispatch, getState) => {
   let meData = await authAPI.me();
     if (meData.resultCode === ResultCodeEnum.Success) {
       let {id, login, email} = meData.data;
-      dispatch(setAuthUserData(id, email, login, true));
+      dispatch(actions.setAuthUserData(id, email, login, true));
     } 
 }
 
@@ -97,14 +78,79 @@ export const getCaptchaUrl = (): ThunkType => async (dispatch, getState) => {
   const captchaData = await securityAPI.getCaptchaUrl();
   const captchaUrl = captchaData.url;
 
-  dispatch(getCaptchaUrlSuccess(captchaUrl));
+  dispatch(actions.getCaptchaUrlSuccess(captchaUrl));
 }
 
 export const logout = (): ThunkType => async (dispatch, getState) => {
   let response = await authAPI.logout()
     if (response.data.resultCode === ResultCodeEnum.Success) {
-      dispatch(setAuthUserData(null, null, null, false));
+      dispatch(actions.setAuthUserData(null, null, null, false));
     } 
 }
 
 export default authReducer;
+
+
+
+
+
+
+
+
+
+
+
+type PhotoType = {
+  large: string
+  small: string
+}
+
+type UserDataType = {
+  id: number
+  name: string
+  lastName: string
+}
+
+type ServerResponseType<D> = {
+  errorCode: number
+  message: Array<string>
+  data: D
+}
+
+
+const response1: ServerResponseType<UserDataType> = {
+  errorCode: 1,
+  message: ['wrong', 'data'],
+  data: {
+    id: 1,
+    name: 'Costya',
+    lastName: 'Danilov',
+  }
+}
+const response2: ServerResponseType<PhotoType> = {
+  errorCode: 1,
+  message: ['wrong', 'data'],
+  data: {
+    large: 'somephoto....',
+    small: 'somephoto....',
+  }
+}
+
+type CommonForBothType<T> = null |  T
+
+const initialState2 = {
+  age: 22, 
+  name: 'Costya',
+  user: null as CommonForBothType<UserDataType>,
+  photo: null as CommonForBothType<PhotoType>,
+}
+
+type InitialState2Type = typeof initialState2
+
+const reducer = (state: InitialState2Type = initialState2, action: any) => {
+  state.photo = {
+    large: 'df',
+    small: 'df'
+  }
+  return state;
+}
