@@ -11,6 +11,7 @@ import React, { Component, Suspense } from 'react';
 import { connect } from 'react-redux';
 import {initializeApp} from './redux/app-reducer'
 import Preloader from './components/common/preloader/Preloader';
+import { AppStateType } from './redux/redux-state';
 
 
 // import DialogsContainer from './components/Dialogs/DialogsContainer';
@@ -18,9 +19,15 @@ import Preloader from './components/common/preloader/Preloader';
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+import NOTFOUND from './components/common/NOTFOUND';
 
 
-class App extends Component {
+type MapPropsType = ReturnType<typeof mapStateToProps>
+type DispatchPropsType = {
+  initializeApp: () => void
+}
+
+class App extends Component <MapPropsType & DispatchPropsType> {
   // catchAllUnhandledErrors = (promiseRejectionEvent) => {
   //   alert('theres an error occured');
   //   // console.log(promiseRejectionEvent);
@@ -72,7 +79,7 @@ class App extends Component {
                       element={<LoginPage/>} />
 
                   <Route path ='*' 
-                      element={() => <div>404 NOT FOUND</div>} />
+                      element={<NOTFOUND/>} />
 
 
                 </Routes>
@@ -84,7 +91,7 @@ class App extends Component {
 }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType) => ({
   initialized: state.app.initialized,
 })
 

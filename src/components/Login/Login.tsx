@@ -54,7 +54,7 @@ export type LoginFormValuesType = {
   captcha: string
 }
 
-type LoginFormValuesKeyOfType = Extract<keyof LoginFormValuesType, string> 
+export type LoginFormValuesKeyOfType = Extract<keyof LoginFormValuesType, string> 
 
 const Login: React.FC<MapStateToPropsType & MapDispatchToProps> = (props) => {
   const onSubmit = (formData: LoginFormValuesType) => {
