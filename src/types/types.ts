@@ -11,7 +11,7 @@ export type InitialStateProfileContactsType = {
   mainLink: string,
 }
 export type InitialStateProfileType = {
-  userId: number, 
+  userId: number | null, 
   lookingForAJob: boolean, 
   lookingForAJobDescription: string, 
   fullName: string,
