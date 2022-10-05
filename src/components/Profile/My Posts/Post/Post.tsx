@@ -1,6 +1,12 @@
 import s from "./Post.module.css";
 
-const Post = (props) => {
+
+type PostPropsType = {
+  // id: number, 
+  message: string, 
+  likesCount: number
+}
+const Post: React.FC<PostPropsType> = (props) => {
   return (
     <div className={s.item}>
       <img src="https://uprostim.com/wp-content/uploads/2021/03/image096-74.jpg" />

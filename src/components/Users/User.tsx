@@ -1,11 +1,16 @@
 import userPhoto from '../../images/user.png'
 import s from './users.module.css';
 import { NavLink } from 'react-router-dom';
-import * as axios from 'axios';
-import { usersAPI } from './../../api/api';
-import Paginator from '../common/Paginator/Paginator';
+import { UsersType } from '../../types/types';
 
-let User = ({user, followingInProgress, unfollow, follow}) => {
+
+type UserPropsType = {
+  user: UsersType, 
+  followingInProgress: Array<number>, 
+  unfollow: (id: number) => void, 
+  follow: (id: number) => void
+}
+const User: React.FC<UserPropsType> = ({user, followingInProgress, unfollow, follow}) => {
   return (
     <div>
             <span>
@@ -23,13 +28,13 @@ let User = ({user, followingInProgress, unfollow, follow}) => {
                 
                 {user.followed 
                 ? <button disabled={followingInProgress.some(id => id === user.id)} 
-                onClick={() => {unfollow( user.id);}}> 
+                onClick={() => {unfollow( user.id) }}> 
                 Unfollow </button>
 
 
 
                   : <button disabled={followingInProgress.some(id => id === user.id)} 
-                  onClick={() => {follow(user.id);}}> 
+                  onClick={() => {follow(user.id) }}> 
                   Follow </button> }
 
               </div>

@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import {initializeApp} from './redux/app-reducer'
 import Preloader from './components/common/preloader/Preloader';
 import { AppStateType } from './redux/redux-state';
+import NOTFOUND from './components/common/NOTFOUND';
 
 
 // import DialogsContainer from './components/Dialogs/DialogsContainer';
@@ -19,7 +20,6 @@ import { AppStateType } from './redux/redux-state';
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
-import NOTFOUND from './components/common/NOTFOUND';
 
 
 type MapPropsType = ReturnType<typeof mapStateToProps>

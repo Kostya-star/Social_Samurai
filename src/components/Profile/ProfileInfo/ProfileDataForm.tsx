@@ -1,8 +1,17 @@
-import { createField, Input, Textarea} from './../../common/FormsControls/FormsControls';
-import { reduxForm } from 'redux-form';
+import { createField, Input, Textarea} from '../../common/FormsControls/FormsControls';
+import { reduxForm, InjectedFormProps } from 'redux-form';
 import s from '../../common/FormsControls/FormsControls.module.css'
+import { InitialStateProfileType } from '../../../types/types';
+import { GetStringKeysType } from '../My Posts/MyPosts';
 
-const ProfileDataForm = ({profile, handleSubmit, error}) => {
+
+type ProfileDataFormPropsType = {
+  profile: InitialStateProfileType, 
+}
+
+const ProfileDataForm: React.FC<InjectedFormProps<InitialStateProfileType, ProfileDataFormPropsType> 
+& ProfileDataFormPropsType> = ({profile, handleSubmit, error}) => 
+{
   return <form onSubmit={handleSubmit}>
     <div><button>save</button></div>
     {
@@ -21,12 +30,12 @@ const ProfileDataForm = ({profile, handleSubmit, error}) => {
 
       <div> <b>Contacts:</b> {Object.keys(profile.contacts).map(key => {
         return <div key={key}/*className={s.contact}*/>
-          <b>{key}: {createField(key, 'contacts.' + key, [], Input)}</b>
+          <b>{key}: {createField(key, 'contacts' + key, [], Input)}</b>
         </div>
       })} </div>
 </form>
 }
 
-const ProfileDataFormReduxForm = reduxForm({form: 'edit-profile'})(ProfileDataForm);
+const ProfileDataFormReduxForm = reduxForm<InitialStateProfileType, ProfileDataFormPropsType>({form: 'edit-profile'})(ProfileDataForm);
 
 export default ProfileDataFormReduxForm;

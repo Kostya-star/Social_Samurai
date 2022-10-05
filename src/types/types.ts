@@ -17,6 +17,7 @@ export type InitialStateProfileType = {
   fullName: string,
   contacts: InitialStateProfileContactsType,
   photos: InitialStateProfilePhotosType,
+  aboutMe: string
 }
 
 export type UsersType = {
