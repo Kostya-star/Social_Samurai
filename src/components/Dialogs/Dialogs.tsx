@@ -1,9 +1,8 @@
 import s from "./Dialogs.module.css";
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import {Navigate} from 'react-router-dom';
-import { Field, reduxForm, InjectedFormProps } from 'redux-form';
-import { Input, Textarea } from '../common/FormsControls/FormsControls';
+import { reduxForm, InjectedFormProps } from 'redux-form';
+import { Textarea } from '../common/FormsControls/FormsControls';
 import { maxLengthCreator } from "../../utils/validators";
 import { required } from '../../utils/validators';
 import { InitialStateType } from "../../redux/dialogs-reducer";
@@ -19,16 +18,16 @@ export type NewMessageFormValuesType = {
   newMessageBody: string
 }
 
-const Dialogs: React.FC<DialogsPropsType> = (props) => {
+const Dialogs: React.FC<DialogsPropsType> = ({sendMessage, dialogsPage}) => {
 
-  let state = props.dialogsPage;
+  let state = dialogsPage;
 
   let dialogs = state.dialogs.map((d) => (<DialogItem name={d.name} key={d.id} id={d.id} />));
   let messages = state.messages.map((m) => (<Message message={m.message} id={m.id} key={m.id} />));
   // let newMessageBody = state.newMessageBody;
 
-  let addNewMessage = (values: NewMessageFormValuesType) => {
-    props.sendMessage(values.newMessageBody);
+  const addNewMessage = (values: NewMessageFormValuesType) => {
+    sendMessage(values.newMessageBody);
   }
 
   // if (!props.isAuth) return <Navigate to={'/login'} />;

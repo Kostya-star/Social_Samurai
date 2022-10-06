@@ -6,12 +6,12 @@ import {InitialStateProfileType} from '../../types/types'
 
 
 type ProfilePropsType = {
+  profile: InitialStateProfileType | null
   isOwner: boolean
-  profile: /*null as*/ InitialStateProfileType | null
   status: string
-  updateStatus: () => void
-  savePhoto: () => void
-  saveProfile: () => void
+  updateStatus: (status: string) => void
+  savePhoto: (file: File) => void
+  saveProfile: (profile: InitialStateProfileType) => Promise<any>
 }
 
 const Profile: React.FC<ProfilePropsType> = (props) => {

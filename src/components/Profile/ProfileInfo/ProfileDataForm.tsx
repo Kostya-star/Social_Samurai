@@ -2,7 +2,6 @@ import { createField, Input, Textarea} from '../../common/FormsControls/FormsCon
 import { reduxForm, InjectedFormProps } from 'redux-form';
 import s from '../../common/FormsControls/FormsControls.module.css'
 import { InitialStateProfileType } from '../../../types/types';
-import { GetStringKeysType } from '../My Posts/MyPosts';
 
 
 type ProfileDataFormPropsType = {
@@ -28,7 +27,7 @@ const ProfileDataForm: React.FC<InjectedFormProps<InitialStateProfileType, Profi
 
       <div> <b>About me:</b> {createField('about me...', 'aboutMe', [], Textarea)} </div>
 
-      <div> <b>Contacts:</b> {Object.keys(profile.contacts).map(key => {
+      <div> <b>Contacts:</b> {Object.keys(profile.contacts).map((key) => {
         return <div key={key}/*className={s.contact}*/>
           <b>{key}: {createField(key, 'contacts' + key, [], Input)}</b>
         </div>

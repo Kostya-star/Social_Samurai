@@ -11,7 +11,7 @@ import {Provider} from 'react-redux'
 //   store.dispatch({type: 'FAKE'})
 // }, 1000);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root') as Element | DocumentFragment);
   root.render(
     <Provider store={store}>
       <React.StrictMode>

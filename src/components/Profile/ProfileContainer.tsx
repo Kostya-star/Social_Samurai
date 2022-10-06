@@ -19,7 +19,7 @@ type DispatchPropsType = {
   getStatus: (userId: number) => void
   updateStatus: () => void
   savePhoto: () => void
-  saveProfile: () => void
+  saveProfile: () => Promise<any>
 }
 
 // type PathParamsType = {
@@ -58,6 +58,7 @@ class ProfileContainer extends React.Component<PropsType>{
     // console.log('render profile');
     return (
       <Profile {...this.props} 
+                profile={this.props.profile}
                 isOwner={!this.props.router.params.userId}
                 status={this.props.status} 
                 updateStatus={this.props.updateStatus}

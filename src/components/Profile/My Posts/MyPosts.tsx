@@ -18,16 +18,15 @@ export type DispatchPropsType = {
 const MyPosts: React.FC<MapPropsType & DispatchPropsType> = (props) => {
   let postsElements = [...props.posts]
                       .reverse()
-                      .map(p => (<Post key={p.id} message={p.message} likesCount={p.likesCount}/>))
+                      .map((p, index) => (<Post key={index} message={p.message} likesCount={p.likesCount}/>))
 
-  let onAddPost = (values: AddNewPostFormValuesType) => {
+  const onAddPost = (values: AddNewPostFormValuesType) => {
     props.addPost(values.newPostText)
   }
   return (
     <div className={s.postsBlock}>
       <h3>My posts</h3>
-      {/* @ts-ignore */}
-      <AddNewPostForm onSubmit={onAddPost}/>
+      <AddNewPostFormRedux onSubmit={onAddPost}/>
       <div>
         { postsElements }
       </div>
@@ -56,7 +55,7 @@ const AddNewPostForm: React.FC<InjectedFormProps<AddNewPostFormValuesType, Props
   )
 }
 
-let AddNewPostFormRedux = reduxForm<AddNewPostFormValuesType, PropsType>({form: 'ProfileAddNewPostForm'})(AddNewPostForm)
+const AddNewPostFormRedux = reduxForm<AddNewPostFormValuesType>({form: 'ProfileAddNewPostForm'})(AddNewPostForm)
 
 
 export default MyPosts;

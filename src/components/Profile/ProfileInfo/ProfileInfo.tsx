@@ -8,7 +8,7 @@ import { InitialStateProfileContactsType, InitialStateProfileType } from "../../
 
 
 type ProfileInfoPropsType = {
-  profile: InitialStateProfileType, 
+  profile: InitialStateProfileType | null, 
   status: string, 
   updateStatus: (status: string) => void, 
   isOwner: boolean, 
@@ -76,7 +76,7 @@ const ProfileData: React.FC<ProfileDataPropsType> = ({profile, isOwner, goToEdit
       <div> <b>About me:</b> {profile.aboutMe} </div>
 
       <div> <b>Contacts:</b> {Object.keys(profile.contacts).map((key) => {
-        return <Contact contactTitle={key} contactValue={profile.contacts[key as keyof InitialStateProfileContactsType]}/>
+        return <Contact contactTitle={key} key={key} contactValue={profile.contacts[key as keyof InitialStateProfileContactsType]}/>
       })} </div>
   </div>
 }
