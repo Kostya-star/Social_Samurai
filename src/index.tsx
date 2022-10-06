@@ -10,8 +10,7 @@ import {Provider} from 'react-redux'
 // setInterval(() => {
 //   store.dispatch({type: 'FAKE'})
 // }, 1000);
-
-const root = ReactDOM.createRoot(document.getElementById('root') as Element | DocumentFragment);
+const root = ReactDOM.createRoot(document.getElementById('root') as Element);
   root.render(
     <Provider store={store}>
       <React.StrictMode>
