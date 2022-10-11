@@ -5,8 +5,8 @@ import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import {HashRouter, Routes, Route} from 'react-router-dom';
-import UsersContainer from './components/Users/UsersContainer'
-import LoginPage from './components/Login/Login'
+import {UsersPage} from './components/Users/UsersPage'
+import {Login as LoginPage}  from './components/Login/Login'
 import React, { Component, Suspense } from 'react';
 import { connect } from 'react-redux';
 import {initializeApp} from './redux/app-reducer'
@@ -73,7 +73,7 @@ class App extends Component <MapPropsType & DispatchPropsType> {
                       element={<Settings/>} />
 
                   <Route path ='/users' 
-                      element={<UsersContainer pageTitle={'Пользователи'}/>} />
+                      element={<UsersPage pageTitle={'Пользователи'}/>} />
 
                   <Route path ='/login' 
                       element={<LoginPage/>} />

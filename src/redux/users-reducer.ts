@@ -110,7 +110,7 @@ export const actions = {
 
 type GetStateType = () => AppStateType
 type DispatchType = Dispatch<ActionsTypes>
-type ThunkType = BaseThunkType<ActionsTypes>
+export type ThunkType = BaseThunkType<ActionsTypes>
 
 export const requestUsers = (page: number, pageSize: number, filter: FilterType): ThunkType => {
 
