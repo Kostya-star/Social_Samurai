@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentPage, getFollowingInProgress, getPageSize, getTotalUsersCount, getUsers, getUsersFilter } from '../../redux/users-selectors';
 import { requestUsers , follow, unfollow} from './../../redux/users-reducer';
 import { AppDispatch } from '../../redux/redux-state';
+import { useNavigate } from 'react-router'
+import { useLocation } from 'react-router-dom'
+import queryString from 'querystring'
 
 //1 ---------------------------------
 // import { AppStateType } from '../../redux/redux-state';
@@ -16,9 +19,7 @@ import { AppDispatch } from '../../redux/redux-state';
 // export type AppDispatch = ThunkDispatch<AppStateType, any, AnyAction>;
 
 
-type UsersPropsType = {}
-
-export const Users: React.FC<UsersPropsType> = ({}) => {
+export const Users: React.FC = () => {
   
 
   const totalItemsCount = useSelector(getTotalUsersCount)
@@ -30,7 +31,22 @@ export const Users: React.FC<UsersPropsType> = ({}) => {
   
   const dispatch: AppDispatch = useDispatch();
 
+  let navigate = useNavigate();
+  let location = useLocation();
+
+  // React.useEffect(() => {
+  //   navigate({
+  //     pathnames: '/users',
+  //     search: `?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`,
+  //   })
+  //   // navigate('/users')
+  // }, [filter, currentPage])
+
   React.useEffect(() => {
+    const search = location.search
+    //если не сработает querystring библиотека то попробовать использовать URLSearchParams API
+    const parsed = queryString.parse(search)
+
     dispatch(requestUsers(currentPage, pageSize, filter));
   }, [])
 

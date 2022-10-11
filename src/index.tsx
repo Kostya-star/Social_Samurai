@@ -5,6 +5,10 @@ import './index.css';
 import App from './App';
 import store from './redux/redux-state'
 import {Provider} from 'react-redux'
+import { useNavigate } from 'react-router';
+
+
+
 
 
 // setInterval(() => {
@@ -22,3 +26,4 @@ const root = ReactDOM.createRoot(document.getElementById('root') as Element);
 
 
 reportWebVitals();
+
