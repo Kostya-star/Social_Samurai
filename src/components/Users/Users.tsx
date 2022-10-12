@@ -34,22 +34,41 @@ export const Users: React.FC = () => {
   let navigate = useNavigate();
   let location = useLocation();
 
-  // React.useEffect(() => {
-  //   navigate({
-  //     pathnames: '/users',
-  //     search: `?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`,
-  //   })
-  //   // navigate('/users')
-  // }, [filter, currentPage])
-
+  
   React.useEffect(() => {
-    const search = location.search
     //если не сработает querystring библиотека то попробовать использовать URLSearchParams API
-    const parsed = queryString.parse(search)
+    const parsed = queryString.parse(location.search.substr(1)) as {term: string; page: string; friend: string}
+    
+    let actualPage = currentPage
+    let actualFilter = filter
 
-    dispatch(requestUsers(currentPage, pageSize, filter));
+    if(!!parsed.page) actualPage = Number(parsed.page)
+
+    if(!!parsed.term) actualFilter = {...actualFilter, term: parsed.term as string}
+    
+    switch(parsed.friend) {
+      case 'null': 
+      actualFilter = {...actualFilter, friend: null}
+      break;
+      case 'true': 
+      actualFilter = {...actualFilter, friend: true}
+      break;
+      case 'false': 
+      actualFilter = {...actualFilter, friend: false}
+      break;
+    }
+    
+    dispatch(requestUsers(actualPage, pageSize, filter));
   }, [])
-
+  
+  React.useEffect(() => {
+    navigate({
+      pathname: '/users',
+      search: `?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`,
+    })
+    // navigate('/users')
+  }, [filter, currentPage])
+  
   const onPageChanged = (pageNumber: number) => {
     dispatch(requestUsers(pageNumber, pageSize, filter));
   }

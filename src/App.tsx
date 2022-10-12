@@ -57,7 +57,7 @@ class App extends Component <MapPropsType & DispatchPropsType> {
                 <Routes>
 
 
-                  <Route path ='/profile/:userId' 
+                  <Route path ='/profile/:userId?' 
                       element={<ProfileContainer />} />
                   <Route path='/profile/*' 
                       element={<ProfileContainer />} />
