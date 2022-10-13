@@ -1,10 +1,9 @@
 import './App.css';
-import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar'
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import { HashRouter, Routes, Route, Router, Link, NavLink } from 'react-router-dom';
+import { HashRouter, Routes, Route, Link, NavLink, Navigate, BrowserRouter } from 'react-router-dom';
 import {UsersPage} from './components/Users/UsersPage'
 import {Login as LoginPage}  from './components/Login/Login'
 import React, { Component, Suspense } from 'react';
@@ -13,10 +12,14 @@ import {initializeApp} from './redux/app-reducer'
 import Preloader from './components/common/preloader/Preloader';
 import { AppStateType } from './redux/redux-state';
 import NOTFOUND from './components/common/NOTFOUND';
+import s from "./components/Navbar/Navbar.module.css";
 
 import 'antd/dist/antd.css';
-import { Layout, Menu, Breadcrumb } from 'antd';
-import Icon from '@ant-design/icons';
+import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
+import { Avatar, Col, MenuProps, Row } from 'antd';
+import { Breadcrumb, Layout, Menu } from 'antd';
+import SubMenu from 'antd/lib/menu/SubMenu';
+import { MainHeader } from './components/Header/Header';
 
 
 // import DialogsContainer from './components/Dialogs/DialogsContainer';
@@ -97,108 +100,115 @@ class App extends Component <MapPropsType & DispatchPropsType> {
     //   )
 
     // antd ---------------------------------------------------------------------
-    const { SubMenu } = Menu;
-    const { Header, Content, Sider } = Layout;
+    const { Header, Content, Footer, Sider } = Layout;
+
+// const items1: MenuProps['items'] = ['1', '2', '3'].map(key => ({
+//   key,
+//   label: `nav ${key}`,
+// }));
+
+// const items2: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
+//   (icon, index) => {
+//     const key: any = String(index + 1);
+
+//     return {
+//       key: `sub${key}`,
+//       icon: React.createElement(icon),
+//       label: `subnav ${key}`,
+
+//       children: new Array(4).fill(null).map((_, j) => {
+//         const subKey = index * 4 + j + 1;
+//         return {
+//           key: subKey,
+//           label: `option${subKey}`,
+//         };
+//       }),
+//     };
+//   },
+// );
+
+    return ( <Layout>
+
+        <MainHeader />
+
+        <Content style={{ padding: '0 50px' }}>
+          <Breadcrumb style={{ margin: '16px 0' }}>
+            <Breadcrumb.Item>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>List</Breadcrumb.Item>
+            <Breadcrumb.Item>App</Breadcrumb.Item>
+          </Breadcrumb>
+          <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
+            <Sider className="site-layout-background" width={200}>
+
+              {/* <Menu */}
+                 {/* mode="inline" */}
+                 {/* defaultSelectedKeys={['1']} */}
+                 {/* defaultOpenKeys={['sub1']} */}
+                 {/* style={{ height: '100%' }} */}
+                 {/* items={items2}> */}
+                {/* <Menu.Item > */}
+                    {/* smth here */}
+                {/* </Menu.Item> */}
+              {/* </Menu> */}
 
 
 
-    return (
-      <Layout>
-          <Content style={{padding: '0 50px'}}>
-          <Header/>
-              <Breadcrumb style={{margin: '16px 0'}}>
-                  <Breadcrumb.Item>Home</Breadcrumb.Item>
-                  <Breadcrumb.Item>List</Breadcrumb.Item>
-                  <Breadcrumb.Item>App</Breadcrumb.Item>
-              </Breadcrumb>
-              <Layout className="site-layout-background" style={{padding: '24px 0'}}>
-                  <Sider className="site-layout-background" width={200}>
-                      <Menu
-                          mode="inline"
-                          /*  defaultSelectedKeys={['7']}*/
-                          /*  defaultOpenKeys={['sub1']}*/
-                          style={{height: '100%'}}
-                      >
-                          <SubMenu key="sub1" /*icon={<UserOutlined/>}*/  title="My Profile">
-                              <Menu.Item key="1"> <Link to="/profile">Profile</Link></Menu.Item>
-                              <Menu.Item key="2"> <Link to="/dialogs">Messages</Link></Menu.Item>
-                              <Menu.Item key="3">option3</Menu.Item>
-                              <Menu.Item key="4">option4</Menu.Item>
-                          </SubMenu>
-                          <SubMenu key="sub2" /*icon={<LaptopOutlined/>}*/  title="Developers">
-                              <Menu.Item key="5"><Link to="/developers">Developers</Link></Menu.Item>
-                              <Menu.Item key="6">option6</Menu.Item>
-                              <Menu.Item key="7">option7</Menu.Item>
-                              <Menu.Item key="8">option8</Menu.Item>
-                          </SubMenu>
-                          <SubMenu key="sub3" /*icon={<NotificationOutlined/>}*/  title="subnav 3">
-                              <Menu.Item key="9"><Link to="/chat">Chat</Link></Menu.Item>
-                              <Menu.Item key="10">option10</Menu.Item>
-                              <Menu.Item key="11">option11</Menu.Item>
-                              <Menu.Item key="12">option12</Menu.Item>
-                          </SubMenu>
-                      </Menu>
-                  </Sider>
-                  <Content style={{padding: '0 24px', minHeight: 280}}>
+                <Menu 
+                    mode="inline"
+                    defaultSelectedKeys={['']} 
+                    // defaultOpenKeys={['sub1']}
+                    style={{ height: '100%' }}>
+                <SubMenu key='sub1' icon={<UserOutlined/>} title='My Profile'>
+                        <Menu.Item key='1'> <Link to='/profile/*'/> Profile </Menu.Item>
+                        <Menu.Item key='2'> <Link to='/dialogs/*'/> Dialogs </Menu.Item>
+                </SubMenu>
+                <SubMenu key='sub2' icon={<LaptopOutlined/>} title='Developers'>
+                        <Menu.Item key='3'> <Link to='/users/'/> devs </Menu.Item>
+                </SubMenu>
+                </Menu>
 
-                  <HashRouter>
-                    <div className='app-wrapper-content'>
-                        <Routes>
-                          <Route path ='/profile/:userId?' 
-                              element={<ProfileContainer />} />
-                          <Route path='/profile/*' 
-                              element={<ProfileContainer />} />
+            </Sider>
+            <Content style={{ padding: '0 24px', minHeight: 280 }}>
 
-                          <Route path ='/dialogs/*' 
-                              element={<DialogsContainer />} />
-                          
-                          <Route path ='/news' 
-                              element={<News/>} />
-                          <Route path ='/music' 
-                              element={<Music/>} />
-                          <Route path ='/settings' 
-                              element={<Settings/>} />
-
-                          <Route path ='/users' 
-                              element={<UsersPage pageTitle={'Пользователи'}/>} />
-
-                          <Route path ='/login' 
-                              element={<LoginPage/>} />
-
-                          <Route path ='*' 
-                              element={<NOTFOUND/>} />
-                        </Routes>
-                    </div>
-                  </HashRouter >
-
-                  </Content>
-              </Layout>
-          </Content>
-          {/* <Footer style={{textAlign: 'center'}}>Samurai Social Network ©2020 Created by IT-KAMASUTRA</Footer> */}
-      </Layout>
+           
+               <div className='app-wrapper-content'>
+                 <Routes>
 
 
-      /*      <div className='app-wrapper'>
-                <HeaderContainer/>
-                <Navbar/>
-                <div className='app-wrapper-content'>
-                    <Switch>
-                        <Route exact path='/'
-                               element={() => <Redirect to={"/profile"}/>}/>
-                        <Route path='/dialogs'
-                               element={() => <SuspendedDialogs /> }/>
-                        <Route path='/profile/:userId?'
-                               element={() => <SuspendedProfile /> }/>
-                        <Route path='/users'
-                               element={() => <UsersPage pageTitle={"Самураи"}/>}/>
-                        <Route path='/login'
-                               element={() => <LoginPage/>}/>
-                        <Route path='*'
-                               element={() => <div>404 NOT FOUND</div>}/>
-                    </Switch>
-                </div>
-            </div>*/
-  )
+                   <Route path ='/profile/:userId?' 
+                       element={<ProfileContainer />} />
+                   <Route path='/profile/*' 
+                       element={<ProfileContainer />} />
+
+                   <Route path ='/dialogs/*' 
+                       element={<DialogsContainer />} />
+                  
+                   <Route path ='/news' 
+                       element={<News/>} />
+                   <Route path ='/music' 
+                       element={<Music/>} />
+                   <Route path ='/settings' 
+                       element={<Settings/>} />
+
+                   <Route path ='/users' 
+                       element={<UsersPage pageTitle={'Пользователи'}/>} />
+
+                   <Route path ='/login' 
+                       element={<LoginPage/>} />
+
+                   <Route path ='*' 
+                       element={<NOTFOUND/>} />
+
+
+                 </Routes>
+             </div>
+
+
+            </Content>
+          </Layout>
+        </Content>
+        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+      </Layout>)
 
 
 
