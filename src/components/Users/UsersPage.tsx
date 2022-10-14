@@ -13,7 +13,8 @@ export const UsersPage: React.FC<UsersPagePropsType> = ({ pageTitle }) => {
     return <div>
             <h2>{pageTitle}</h2>
             {isFetching ? <Preloader/> 
-              : <Users/>}
+              : null}
+              <Users/>
           </div>
 
 }

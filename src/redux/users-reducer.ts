@@ -26,7 +26,7 @@ let initialState = {
   followingInProgress: [] as Array<number>, //array of users ids
   filter: {
     term: '',
-    friend: null as null | boolean,
+    friend: null as boolean | null,
   }
 };
 
@@ -101,9 +101,9 @@ export const actions = {
   followSuccess: (userId: number) => ({ type: FOLLOW, userId }),
   unfollowSuccess: (userId: number) => ({ type: UNFOLLOW, userId }),
   setUsers: (users: Array<UsersType>) => ({ type: SET_USERS, users}),
+  setTotalItemsCount: (totalItemsCount: number) => ({ type: SET_TOTAL_USERS_COUNT, count: totalItemsCount}),
   setCurrentPage: (page: number) => ({ type: SET_СURRENT_PAGE, page }),
   setFilter: (filter: FilterType) => ({type: SET_FILTER, payload: filter }),
-  setTotalItemsCount: (totalItemsCount: number) => ({ type: SET_TOTAL_USERS_COUNT, count: totalItemsCount}),
   toggleIsFetching: (isFetching: boolean) => ({ type: TOGGLE_IS_FETCHING, isFetching }),
   toggleFollowingProgress: (isFetching: boolean, userId: number) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId })
 }

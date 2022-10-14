@@ -43,7 +43,7 @@ type SavePhotoResponseDataType = {
 
 const instance =  axios.create({
   withCredentials: true, 
-  baseURL: 'https://social-network.samuraijs.com/api/1.0/',
+  baseURL: `https://social-network.samuraijs.com/api/1.0/`,
   headers: {'API-KEY': 'dca26a06-d5b4-4cd5-9fac-078e66205e0a'},
 });
 
@@ -56,7 +56,7 @@ export const usersAPI = {
   },
       
   follow(userId: number) {
-    return instance.post<ResponseType>(`follow/${userId}`, {}).then((response) => response.data)
+    return instance.post<ResponseType>(`follow/${userId}`).then((response) => response.data)
   },
 
   unfollow(userId: number) {
