@@ -68,7 +68,6 @@ export const Users: React.FC = () => {
     // }
 
     const currentParams = Object.fromEntries([...searchParams]) as {term: string; page: string; friend: string}
-    console.log('useEffect current search parameters', currentParams);
 
     let actualPage = currentPage
     let actualFilter = filter
@@ -107,11 +106,11 @@ export const Users: React.FC = () => {
     dispatch(requestUsers(1, pageSize, filter));
   }
 
-  const follow = (userId: number) => {
+  const onFollow = (userId: number) => {
     dispatch(follow(userId))
   }
 
-  const unfollow = (userId: number) => {
+  const onUnfollow = (userId: number) => {
     dispatch(unfollow(userId))
   }
 
@@ -130,8 +129,8 @@ export const Users: React.FC = () => {
             user={u} 
             followingInProgress={followingInProgress} 
             key={u.id} 
-            unfollow={unfollow} 
-            follow={follow}
+            unfollow={ onUnfollow} 
+            follow={ onFollow}
           /> )
         }
       </div>

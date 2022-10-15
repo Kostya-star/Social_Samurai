@@ -15,18 +15,16 @@ import NOTFOUND from './components/common/NOTFOUND';
 import s from "./components/Navbar/Navbar.module.css";
 
 import 'antd/dist/antd.css';
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
+import { LaptopOutlined, MessageOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Col, MenuProps, Row } from 'antd';
 import { Breadcrumb, Layout, Menu } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { MainHeader } from './components/Header/Header';
 
 
-// import DialogsContainer from './components/Dialogs/DialogsContainer';
-// import ProfileContainer from './components/Profile/ProfileContainer';
-
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const ChatPage = React.lazy(() => import('./pages/Chat/ChatPage'));
 
 
 type MapPropsType = ReturnType<typeof mapStateToProps>
@@ -35,25 +33,15 @@ type DispatchPropsType = {
 }
 
 
-
 class App extends Component <MapPropsType & DispatchPropsType> {
-  // catchAllUnhandledErrors = (promiseRejectionEvent) => {
-  //   alert('theres an error occured');
-  //   // console.log(promiseRejectionEvent);
-  // }
 
   componentDidMount() {
     this.props.initializeApp();
-    // window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
   }
-  // componentWillUnmount() {
-  //   window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors);
-  // }
 
   render() {
     
     !this.props.initialized && <Preloader/>
-    // if (!this.props.initialized) return <Preloader/>
 
     // antd ---------------------------------------------------------------------
     const { Header, Content, Footer, Sider } = Layout;
@@ -107,8 +95,6 @@ class App extends Component <MapPropsType & DispatchPropsType> {
                 {/* </Menu.Item> */}
               {/* </Menu> */}
 
-
-
                 <Menu 
                     mode="inline"
                     defaultSelectedKeys={['']} 
@@ -121,15 +107,16 @@ class App extends Component <MapPropsType & DispatchPropsType> {
                 <SubMenu key='sub2' icon={<LaptopOutlined/>} title='Developers'>
                         <Menu.Item key='3'> <Link to='/users/'/> devs </Menu.Item>
                 </SubMenu>
+                <SubMenu key='sub3' icon={<MessageOutlined/>} title='Chat'>
+                        <Menu.Item key='4'> <Link to='/chat/'/> chat </Menu.Item>
+                </SubMenu>
                 </Menu>
 
             </Sider>
             <Content style={{ padding: '0 24px', minHeight: 280 }}>
-
            
                <div className='app-wrapper-content'>
                  <Routes>
-
 
                    <Route path ='/profile/:userId?' 
                        element={<ProfileContainer />} />
@@ -152,13 +139,14 @@ class App extends Component <MapPropsType & DispatchPropsType> {
                    <Route path ='/login' 
                        element={<LoginPage/>} />
 
+                   <Route path ='/chat' 
+                       element={<ChatPage/>} />
+
                    <Route path ='*' 
                        element={<NOTFOUND/>} />
 
-
                  </Routes>
              </div>
-
 
             </Content>
           </Layout>
