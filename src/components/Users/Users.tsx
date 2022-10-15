@@ -37,64 +37,60 @@ export const Users: React.FC = () => {
   // .entries('') is to get all the parameters from the query string URLSearchParams object. - WONT PROBABLY NEED THAT
   
 
-  // const [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   // const params = Object.fromEntries([...searchParams]) 
   // console.log('single-time read mounted params', params);
   
 
   React.useEffect(() => {
     // если не сработает querystring библиотека то попробовать использовать URLSearchParams API
-    const parsed = queryString.parse(location.search.substr(1)) as { term?: string; page?: string; friend?: string }
+    // const parsed = queryString.parse(location.search.substr(1)) as { term?: string; page?: string; friend?: string }
     
-    // console.log('query string parsed--------',parsed);
+    // // console.log('query string parsed--------',parsed);
     
-    let actualPage = currentPage
-    let actualFilter = filter
-
-    if(!!parsed.page) actualPage = Number(parsed.page) 
-
-    if(!!parsed.term) actualFilter = {...actualFilter, term: parsed.term as string}
-    
-    switch(parsed.friend) {
-      case 'null': 
-        actualFilter = {...actualFilter, friend: null}
-      break;
-      case 'true': 
-        actualFilter = {...actualFilter, friend: true}
-      break;
-      case 'false': 
-        actualFilter = {...actualFilter, friend: false}
-      break;
-    }
-
-    // const currentParams = Object.fromEntries([...searchParams]) as {term: string; page: string; friend: string}
-    // console.log('useEffect current search parameters', currentParams);
-
     // let actualPage = currentPage
     // let actualFilter = filter
-    // if(!!currentParams.page) actualPage = Number(currentParams.page)
-    // if(!!currentParams.term) actualFilter = {...actualFilter, term: currentParams.term}
 
-    // switch(currentParams.friend) {
+    // if(!!parsed.page) actualPage = Number(parsed.page) 
+
+    // if(!!parsed.term) actualFilter = {...actualFilter, term: parsed.term as string}
+    
+    // switch(parsed.friend) {
     //   case 'null': 
-    //   actualFilter = {...actualFilter, friend: null}
+    //     actualFilter = {...actualFilter, friend: null}
     //   break;
     //   case 'true': 
-    //   actualFilter = {...actualFilter, friend: true}
+    //     actualFilter = {...actualFilter, friend: true}
     //   break;
     //   case 'false': 
-    //   actualFilter = {...actualFilter, friend: false}
+    //     actualFilter = {...actualFilter, friend: false}
     //   break;
     // }
 
-    dispatch(requestUsers( actualPage, actualPage, actualFilter  ));
+    const currentParams = Object.fromEntries([...searchParams]) as {term: string; page: string; friend: string}
+    console.log('useEffect current search parameters', currentParams);
+
+    let actualPage = currentPage
+    let actualFilter = filter
+    if(!!currentParams.page) actualPage = Number(currentParams.page)
+    if(!!currentParams.term) actualFilter = {...actualFilter, term: currentParams.term}
+
+    switch(currentParams.friend) {
+      case 'null': 
+      actualFilter = {...actualFilter, friend: null}
+      break;
+      case 'true': 
+      actualFilter = {...actualFilter, friend: true}
+      break;
+      case 'false': 
+      actualFilter = {...actualFilter, friend: false}
+      break;
+    }
+    
+    dispatch(requestUsers( actualPage, pageSize, actualFilter  ));
   }, [])
 
   React.useEffect(() => {
-    // const query: QueryParamsType = {}
-    // if (!!filter.term) query.term = filter.term
-    //     if (filter.friend !== null) query.friend = String(filter.friend)
-    //     if (currentPage !== 1) query.page = String(currentPage)
     navigate({
       pathname: '/users',
       search: `?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`,
