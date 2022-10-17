@@ -16,11 +16,15 @@ const Messages: React.FC<{wsChannel: WebSocket | null}> = ({wsChannel}) => {
   const [messages, setMessages] = React.useState<MessageBlockType[]>([])
 
   React.useEffect(() => {
-    wsChannel?.addEventListener('message', (event: MessageEvent) => {
-        // debugger
-        const newMessages: MessageBlockType[] = JSON.parse(event.data)
-        setMessages((prevMessages) => [...prevMessages, ...newMessages]);
-      })
+    const messageHandler = (event: MessageEvent) => {
+      // debugger
+      const newMessages: MessageBlockType[] = JSON.parse(event.data)
+      setMessages((prevMessages) => [...prevMessages, ...newMessages]);
+    }
+
+    wsChannel?.addEventListener('message', messageHandler)
+
+    return () => wsChannel?.removeEventListener('message', messageHandler)
   }, [wsChannel])
   // debugger
 

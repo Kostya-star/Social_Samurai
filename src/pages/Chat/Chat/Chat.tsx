@@ -6,22 +6,29 @@ import SendMessageForm from './SendMessageForm/SendMessageForm';
 const Chat: React.FC = () => {
   const [wsChannel, setWsChannel] = React.useState<WebSocket | null>(null)
 
-  let ws: WebSocket;
-
   React.useEffect(() => {
+    let ws: WebSocket;
+
+    const closeHandler = () => {
+      console.log('CLOSE WS');
+      setTimeout( createWsChannel, 2000 )
+    }
 
     function createWsChannel() {
-      setWsChannel(new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx'))
+      ws?.removeEventListener('close', closeHandler)
+      ws?.close()
+      ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
+      ws.addEventListener('close', closeHandler)
+      setWsChannel(ws)
     }
 
     createWsChannel()
-  }, [])
 
-  React.useEffect(() => {
-    wsChannel?.addEventListener('close', () => {
-      console.log('CLOSE WS');
-    })
-  }, [wsChannel])
+    return () => {
+      ws.removeEventListener('close', closeHandler)
+      ws.close()
+    }
+  }, [])
 
   return (
     <div>

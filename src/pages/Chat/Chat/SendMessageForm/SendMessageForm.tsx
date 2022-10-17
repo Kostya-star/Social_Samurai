@@ -6,15 +6,29 @@ const SendMessageForm: React.FC<{wsChannel: WebSocket | null}> = ({wsChannel}) =
 
   const[message, setMessage] = React.useState('')
   const[readyStatus, setReadyStatus] = React.useState<'pending' | 'ready'>('pending')
+  // console.log('readyStatus', readyStatus);
+  // console.log('wsChannel', wsChannel);
+  
 
-  React.useEffect(() => {
-    wsChannel?.addEventListener('open', () => {
+  React.useEffect( () => {
+    const onOpenHandler = () => {
       setReadyStatus('ready')
-    })
-  }, [])
+    }
+
+    // if(wsChannel !== null) {
+    //   wsChannel?.removeEventListener('open', onOpenHandler)
+    // }
+
+    wsChannel?.addEventListener('open', onOpenHandler)
+
+    return () => {
+      wsChannel?.removeEventListener('open', onOpenHandler)
+    }
+  }, [wsChannel])
 
   const sendMessage = () => {
     if (!message) return 
+
     wsChannel?.send(message)
     setMessage('')
   }
@@ -25,13 +39,8 @@ const SendMessageForm: React.FC<{wsChannel: WebSocket | null}> = ({wsChannel}) =
         <textarea onChange={e => setMessage(e.currentTarget.value)} value={message}></textarea>
       </div>
       <div>
-        
-        // кнопка в данный момент disabled либо потому что wsChannel === null или readyStatus !== 'ready'
-        // в след раз как сядешь за комп, то попробовать пофиксить. Если что попробовать wsChannel переменную 
-        // поменять на new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx') - как один 
-        // из вариантов как починить проблему
 
-        <button disabled={wsChannel === null || readyStatus !== 'ready'} onClick={sendMessage}> Send </button>
+        <button disabled={wsChannel === null || readyStatus === 'pending'} onClick={sendMessage}> Send </button>
       </div>
     </div>
   )
