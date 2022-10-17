@@ -1,5 +1,5 @@
 import React from 'react'
-import { MessageBlockType } from '../Messages';
+import { MessageBlockType } from '../../../../../api/api';
 
 
 const MessageBlock: React.FC<{message: MessageBlockType}> = ({ message }) => {

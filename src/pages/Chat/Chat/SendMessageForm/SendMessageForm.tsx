@@ -1,35 +1,18 @@
 import React from 'react'
-// import { ws } from '../Chat'
+import { useDispatch } from 'react-redux';
+import {sendMessage} from '../../../../redux/chat-reducer'
 
 
-const SendMessageForm: React.FC<{wsChannel: WebSocket | null}> = ({wsChannel}) => {
+const SendMessageForm: React.FC = () => {
 
   const[message, setMessage] = React.useState('')
   const[readyStatus, setReadyStatus] = React.useState<'pending' | 'ready'>('pending')
-  // console.log('readyStatus', readyStatus);
-  // console.log('wsChannel', wsChannel);
   
-
-  React.useEffect( () => {
-    const onOpenHandler = () => {
-      setReadyStatus('ready')
-    }
-
-    // if(wsChannel !== null) {
-    //   wsChannel?.removeEventListener('open', onOpenHandler)
-    // }
-
-    wsChannel?.addEventListener('open', onOpenHandler)
-
-    return () => {
-      wsChannel?.removeEventListener('open', onOpenHandler)
-    }
-  }, [wsChannel])
-
-  const sendMessage = () => {
+  const dispatch = useDispatch()
+ 
+  const onSendMessage = () => {
     if (!message) return 
-
-    wsChannel?.send(message)
+    dispatch(sendMessage(message))
     setMessage('')
   }
 
@@ -40,7 +23,7 @@ const SendMessageForm: React.FC<{wsChannel: WebSocket | null}> = ({wsChannel}) =
       </div>
       <div>
 
-        <button disabled={wsChannel === null || readyStatus === 'pending'} onClick={sendMessage}> Send </button>
+        <button disabled={false} onClick={onSendMessage}> Send </button>
       </div>
     </div>
   )

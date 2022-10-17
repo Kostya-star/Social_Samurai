@@ -1,32 +1,14 @@
 import React from 'react'
+import { MessageBlockType } from '../../../../api/api';
 import MessageBlock from './MessageBlock/MessageBlock';
+import { useSelector } from 'react-redux';
+import { AppStateType } from '../../../../redux/redux-state';
 
 
 
-export type MessageBlockType = {
-  userId: number
-  userName: string
-  message: string
-  photo: string
-}
+const Messages: React.FC = () => {
 
-
-const Messages: React.FC<{wsChannel: WebSocket | null}> = ({wsChannel}) => {
-
-  const [messages, setMessages] = React.useState<MessageBlockType[]>([])
-
-  React.useEffect(() => {
-    const messageHandler = (event: MessageEvent) => {
-      // debugger
-      const newMessages: MessageBlockType[] = JSON.parse(event.data)
-      setMessages((prevMessages) => [...prevMessages, ...newMessages]);
-    }
-
-    wsChannel?.addEventListener('message', messageHandler)
-
-    return () => wsChannel?.removeEventListener('message', messageHandler)
-  }, [wsChannel])
-  // debugger
+  const messages = useSelector((state: AppStateType) => state.chat.messages)
 
   return (
     <div style={{height: '400px',   overflowY: 'auto'}}>
