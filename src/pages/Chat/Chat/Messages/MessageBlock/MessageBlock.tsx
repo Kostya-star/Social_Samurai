@@ -1,8 +1,8 @@
 import React from 'react'
-import { MessageBlockType } from '../../../../../api/api';
+import { MessageBlockAPIType } from '../../../../../api/api';
 
 
-const MessageBlock: React.FC<{message: MessageBlockType}> = ({ message }) => {
+const MessageBlock: React.FC<{message: MessageBlockAPIType}> = React.memo (({ message }) => {
   return (
     <div>
       <div>
@@ -14,6 +14,6 @@ const MessageBlock: React.FC<{message: MessageBlockType}> = ({ message }) => {
       </div>
     </div>
   )
-}
+})
 
 export default MessageBlock;
